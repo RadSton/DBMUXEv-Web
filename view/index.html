@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DBMUXEv Viewer: Loading ...</title>
+
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+
+    <link rel="stylesheet" href="css/base.css">
+    <script src="./js/netutils.js"></script>
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <span class="logotext">DBMUXEv Viewer</span>
+        </div>
+        <div class="searchbar">
+            <div class="search">
+                <span class="material-symbols-outlined">search</span>
+                <input type="value" name="" disabled placeholder="Search disabled ..." id="">
+            </div>
+        </div>
+        </div>
+        <div class="dbmuxevselection">
+            <a class="headerLink" href="/architecture">
+                <span class="material-symbols-outlined">architecture</span>
+                Architecture
+            </a>
+            <a class="headerLink" href="/nodes">
+                <span class="material-symbols-outlined">hub</span>
+                Nodes
+            </a>
+            <a class="headerLink" href="/cars">
+                <span class="material-symbols-outlined">directions_car</span>
+                Cars
+            </a>
+            <a class="headerLink" href="/buses">
+                <span class="material-symbols-outlined">settings_input_component</span>
+                Buses
+            </a>
+        </div>
+    </header>
+    <main>
+        <h1><noscript>This page depends on javascript! Without it you are stuck and cant search!</noscript></h1>
+        
+        <h5 class="renderingDetails">Loading ...</h5>
+
+        <div class="searchList"></div>
+        <div class="selectedInfo"></div>
+    </main>
+    <script type="module" src="./js/router.js"></script>
+</body>
+
+</html>

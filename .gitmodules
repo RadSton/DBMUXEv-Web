@@ -1,0 +1,3 @@
+[submodule "db/PSA-RE"]
+	path = db/PSA-RE
+	url = https://github.com/RadSton/PSA-RE

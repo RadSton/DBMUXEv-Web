@@ -1,0 +1,320 @@
+:root {
+    --text-color: #fff;
+    --background-color: #121212;
+    --frame-background: #1e1e1e;
+}
+
+header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 97vw;
+    height: 50px;
+    display: flex;
+    margin: 20px 1vw;
+}
+
+header>div {
+    margin: auto;
+}
+
+main {
+    margin-top: 100px;
+    min-height: 85vh;
+}
+
+body {
+    margin: 0;
+    color: var(--text-color);
+    background: var(--background-color);
+
+    font-family: monospace;
+}
+
+.logotext {
+    font-size: 21pt;
+    font-weight: 680;
+    color: #ff9100;
+}
+
+.logo {
+    margin: auto 0 auto 0;
+    text-align: center;
+    max-width: 170px;
+}
+
+.dbmuxevselection>a {
+    margin: 0 1vw;
+    font-size: 12pt;
+    text-decoration: none;
+    color: var(--text-color);
+    opacity: 0.7;
+    white-space: nowrap;
+}
+
+.dbmuxevselection>a:hover {
+    text-decoration: underline;
+}
+
+.dbmuxevselection {
+    margin-left: 30px;
+}
+
+.headerLink>.material-symbols-outlined {
+    font-size: 11pt;
+}
+
+.searchbar {
+    max-width: 900px;
+    min-width: 250px;
+    height: 50px;
+    width: 50vw;
+}
+
+.search>.material-symbols-outlined {
+    font-size: 25pt;
+}
+
+.search {
+    display: flex;
+    align-items: center;    
+    justify-content: flex-start;
+    padding-left: 30px;
+    height: 100%;
+    background: var(--frame-background);
+    border-radius: 30px;
+    width: 100%;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.search>input {
+    width: 80%;
+    height: 30px;
+    background: none;
+    border: 0;
+    color: var(--text-color);
+}
+
+input:focus {
+    border: 0;
+    outline: 0;
+    border-radius: 0 10px 10px 0;
+}
+
+h1 {
+    font-size: 32pt;
+}
+
+h5 {
+    font-size: 15pt;
+}
+
+break {
+    width: 100%;
+}
+
+.selected {
+    font-weight: 800;
+    opacity: 1 !important;
+}
+
+.searchList {
+    padding: 30px;
+    padding-top: 0;
+}
+
+.searchResult {
+    margin: 20px 0px;
+    padding: 20px;
+    border-radius: 10px;
+    min-height: 75px;
+    background-color: var(--frame-background);
+    display: grid;
+    grid-template-columns: 0.4fr 1.6fr;
+    grid-template-rows: 1fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas:
+        "searchResultId searchResultInfo";
+}
+
+.searchResultId {
+    grid-area: searchResultId;
+    font-size: 40pt;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-right: 3vw;
+}
+
+.searchResultInfo {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: minmax(0, 1fr);
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas:
+        "searchResultName"
+        "searchResultCodes"
+        "searchResultCodesName";
+    grid-area: searchResultInfo;
+}
+
+.searchResultInfo>span {
+    margin-bottom: 10px;
+}
+
+.searchResultName {
+    grid-area: searchResultName;
+}
+
+.searchResultCodes {
+    grid-area: searchResultCodes;
+}
+
+.searchResultCodesName {
+    grid-area: searchResultCodesName;
+}
+
+.carName,
+.carCodes,
+.carCodesName {
+    font-size: 11pt;
+    overflow-y: hidden;
+}
+
+.renderingDetails {
+    text-align: center;
+    opacity: 0.6;
+    font-size: 12pt;
+    margin: 0;
+}
+
+::-webkit-scrollbar {
+    width: 20px;
+    opacity: 0.3;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #2e2e2e;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #3e3e3e;
+}
+
+::-webkit-scrollbar-corner {
+    background: #00000000;
+}
+
+.selTitle {
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-size: 25pt;
+    padding-bottom: 3vh;
+}
+
+.selType {
+    font-weight: 800;
+    opacity: 0.5;
+}
+
+.selectedInfo {
+    background: var(--frame-background);
+    margin: 30px 30px;
+    border-radius: 15px;
+    padding: 10px;
+}
+
+.selectedInfo>span {
+    display: block;
+}
+
+.selectedInfo>.field {
+    font-size: 18pt;
+    color: #ffffffaa;
+}
+
+.selectedInfo>.fieldTitle {
+    padding-top: 13pt;
+    padding-bottom: 4pt;
+    font-size: 27pt;
+}
+
+.selectedInfo>.field>.fieldValue {
+    color: #fff;
+}
+
+.field[data-depth="1"] {
+    padding-left: 2vw;
+}
+
+.field[data-depth="2"] {
+    padding-left: 4vw;
+}
+
+.field[data-depth="3"] {
+    padding-left: 6vw;
+}
+
+
+.field[data-depth="4"] {
+    padding-left: 8vw;
+}
+
+.fieldLink {
+    color: var(--text-color);
+}
+
+.fieldLink:hover {
+    opacity: 0.7;
+}
+
+.searchResultIdSmall {
+    font-size: 28pt;
+    padding-right: 3vw;
+}
+
+.languageSwitcher>span[data-sel] {
+    text-decoration: underline;
+    font-weight: 800;
+    color: #ffae43;
+}
+
+@media only screen and (max-width: 700px) {
+    .selTitle {
+        font-size: 20pt;
+    }
+
+    .selectedInfo>.field {
+        font-size: 16pt;
+    }
+
+    .fieldTitle {
+        font-size: 20pt;
+    }
+
+    .logotext {
+        font-size: 14pt;
+    }
+}
+
+@media only screen and (max-width: 501px) {
+    .selTitle {
+        font-size: 16pt;
+    }
+
+    .selectedInfo>.field {
+        font-size: 13pt;
+    }
+
+    .fieldTitle {
+        font-size: 16pt;
+    }
+
+    .logotext {
+        font-size: 10pt;
+    }
+}
