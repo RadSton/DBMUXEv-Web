@@ -146,8 +146,9 @@ export default class Buses extends Shared {
             if (signal.alt_names)
                 this.checkedTreeField("-> Alternative Names: ", signal.alt_names.join(", "), 2);
 
-            this.checkedTreeField("-> type: ", signal.type, 2);
-            this.checkedTreeField("-> Min: ", signal.min, 2);
+            this.checkedTreeField("-> Type: ", signal.type, 2);
+            this.checkedTreeField("-> Signed: ", signal.signed, 2);
+            this.checkedTreeField("-> Min: ", signal.min, 2); 
             this.checkedTreeField("-> Max: ", signal.max, 2);
             this.checkedTreeField("-> Units: ", signal.units, 2);
             this.checkedTreeField("-> Offset: ", signal.offset, 2);
