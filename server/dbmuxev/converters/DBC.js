@@ -80,12 +80,12 @@ module.exports = {
                         continue;
                     }
 
-                    const { length, startBit } = bitHelper.convertDBMUXBitsToBigEndianFormat(signal.bits)
+                    const { length, startBit } = bitHelper.convertToBigEndian(signal.bits)
 
-                    let unsigned = false;
+                    let unsigned = true;
 
-                    if (signal.type && signal.type.startsWith("u"))
-                        unsigned = true
+                    if (signal.signed)
+                        unsigned = false
 
                     const factor = signal.factor != undefined ? signal.factor : 1;
                     const offset = signal.offset != undefined ? signal.offset : 0;
@@ -97,7 +97,7 @@ module.exports = {
                     // TODO: DO NOT HARD CODE ENDIAN
                     // @<ENDIAN>  
                     // ENDIAN : 0 -> big 1 -> little 
-                    DBC += `\n SG_ ${signalName} : ${startBit}|${length}@1${unsigned ? "+" : "-"} (${factor},${offset}) [${min}|${max}] \"${units}\" ${reciver}`
+                    DBC += `\n SG_ ${signalName} : ${startBit}|${length}@0${unsigned ? "+" : "-"} (${factor},${offset}) [${min}|${max}] \"${units}\" ${reciver}`
 
                     if (signal.comment && signal.comment[lang])
                         comments += `CM_ SG_ ${message.id} ${signalName} \"${signal.comment[lang]}\";\n`;

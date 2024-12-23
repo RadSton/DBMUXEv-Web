@@ -2,22 +2,42 @@
 // Originaly wanted to base this on https://github.com/RadSton/PSA-RE/commit/247a8fa632d1fe00c7b4fc055f06930bf77090d0#diff-856037e48e5b11ecbda37a2786352dcf9f0ef3bc8252d676511e91d50eac6724R160-R170
 // but I think only the reversing was "directly" copied
 // it works thank god ; Update 2 weeks later: no it didnt, id*** radston12
-
+// Update 6 days later: Yes it works for now but the function "bigEndian" does "LittleEndian", such an id*** radston12
+// Fixed now
 
 
 /**
- * This function converts 
+ * This function converts the supplied bits to the big endian format by returning startBit and length
+ * 
+ * @param {"1.7-1.0"} bits "bits" string from signals
+ * @returns {{length: 1, startBit: 10}}
+ * @todo optimize dont convert to little endian just for length!
+ */
+
+module.exports.convertToBigEndian = (bits) => {
+    if(bits.length == 1) bits = bits + ".0";
+
+    let raw = bits.replaceAll(".", "").split("-");
+
+    return {
+        length: this.convertToLittleEndian(bits).length,
+        startBit: convertToBigEndianLocation(Number.parseInt(raw[0]))
+    }
+}
+
+/**
+ * This function converts the supplied bits to the little endian format by returning startBit and length
  * 
  * @param {"1.7-1.0"} bits "bits" string from signals
  * @returns {{length: 1, startBit: 10}}
  */
 
-module.exports.convertDBMUXBitsToBigEndianFormat = (bits) => {
+module.exports.convertToLittleEndian = (bits) => {
 
     if(bits.length == 1) bits = bits + ".0";
 
     let raw = bits.replaceAll(".", "").split("-").map((x) => Number.parseInt(x)); // List of raw values without dot // f.e. "1.7-1.0" -> [7, 0] or "5.0" -> [32]
-    let parsed = raw.map(convertToBigEndianLocation);
+    let parsed = raw; // .map(convertToBigEndianLocation)
 
     let data = {
         length: 1,
