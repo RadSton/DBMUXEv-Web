@@ -77,6 +77,7 @@ export default class Buses extends Shared {
     }
 
     renderMessageInfo(message, arch, network, bus, messageId) {
+        setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 1); // set Timeout is just so that it runs async seems to block thread otherwise
 
         this.setInfoActive(true);
         this.setRenderingDetails("");
