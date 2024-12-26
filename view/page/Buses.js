@@ -11,6 +11,7 @@ export default class Buses extends Shared {
         await super.init();
 
         this.buses = await requestJSON("GET", "/api/v1/buses");
+        this.networks = await requestJSON("GET", "/api/v1/networks")
     }
 
 
@@ -54,6 +55,35 @@ export default class Buses extends Shared {
             result += this.generateBusElement(bus);
 
         this.searchList.innerHTML = result;
+    }
+
+    renderDisclaimer(arch, network, bus) {
+
+        const disclaimerLocalStorageId = "DISC_" + arch + "-" + network + "." + bus;
+
+        if (localStorage.getItem(disclaimerLocalStorageId))
+            return false;
+
+        const disclaimer = this.networks[arch]?.[network + "." + bus]?.disclaimer;
+
+        console.log(disclaimer);
+        if (!disclaimer)
+            return false;
+
+        this.setInfoActive(true);
+        this.setRenderingDetails("Please read the following disclaimer before continuing!");
+
+        this.selectedInfo.innerHTML = `
+        <span class="selTitle">Please read this disclaimer about <span class="selType">${network + "." + bus}</span></span>
+        <span class="selTitle">${disclaimer}</span>
+        <span class="selTitle"><a class="headerLink selected disclaimerLink" onclick="currentPage.callFunc('acceptDisclaimer', '${disclaimerLocalStorageId}')">Continue </a></span> `;
+
+        return true;
+    }
+
+    acceptDisclaimer(storageId) {
+        localStorage.setItem(storageId, true);
+        this.onRedirect();
     }
 
     renderMessageSelector(messages, arch, network, bus) {
@@ -149,7 +179,7 @@ export default class Buses extends Shared {
 
             this.checkedTreeField("-> Type: ", signal.type, 2);
             this.checkedTreeField("-> Signed: ", signal.signed, 2);
-            this.checkedTreeField("-> Min: ", signal.min, 2); 
+            this.checkedTreeField("-> Min: ", signal.min, 2);
             this.checkedTreeField("-> Max: ", signal.max, 2);
             this.checkedTreeField("-> Units: ", signal.units, 2);
             this.checkedTreeField("-> Offset: ", signal.offset, 2);
@@ -201,7 +231,7 @@ export default class Buses extends Shared {
             return;
         }
 
-        if(this.query) {
+        if (this.query) {
             this.setLockedSearch(false, "Search for message");
             this.simulateSearch(this.query);
             return;
@@ -210,6 +240,8 @@ export default class Buses extends Shared {
         let messages = this.buses[this.arch][this.network + "." + this.bus];
 
         if (!this.message) {
+            if (this.renderDisclaimer(this.arch, this.network, this.bus)) 
+                return;
             this.setLockedSearch(false, "Search for message");
             this.renderMessageSelector(messages, this.arch, this.network, this.bus);
             return;

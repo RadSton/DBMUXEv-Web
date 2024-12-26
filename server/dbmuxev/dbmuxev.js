@@ -145,6 +145,8 @@ module.exports.loadSmart = (configuarion) => {
 
                }
 
+            } else if(busMessageFile == "_DISCLAIMER.txt") {
+               dbmuxev.networks[architectureKey][networkFullName].disclaimer = fs.readFileSync(path.join(networkPath, './' + busMessageFile), 'utf8');
             }
          }
 

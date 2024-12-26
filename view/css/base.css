@@ -318,3 +318,12 @@ break {
         font-size: 10pt;
     }
 }
+
+.disclaimerLink {
+    color: red;
+}
+
+.disclaimerLink:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}

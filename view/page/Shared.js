@@ -127,6 +127,14 @@ export default class {
         return `<span class="convertLink languageSwitcher">Download as <span data-sel style="cursor: pointer;" onClick="currentPage.createConvertion('${converter}','${arch}','${busIdentifyer}')">${converter}-File</span> (Choose language beforehand!)</span>`
     }
 
+    callFunc(funcName, param) {
+        try {
+            this[funcName](param)
+        } catch (error) {
+            console.error(error)
+            this.onRedirect();
+        }
+    }
 
     async createConvertion(converter, arch, bus) {
         const data = await requestJSON("GET", "/api/v1/convert/" + converter + "/" + arch + "/" + bus + "/" + this.defaultLang)

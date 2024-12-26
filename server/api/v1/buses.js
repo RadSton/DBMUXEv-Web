@@ -5,6 +5,10 @@ module.exports = (app = require("express")(), configuration, dbmuxev = require("
         res.send(dbmuxev.buses);
     });
 
+    app.get("/api/v1/networks", (req, res) => {
+        res.send(dbmuxev.networks);
+    })
+
     app.post("/api/v1/buses/search", (req, res) => {
         
         if (!req.body.query) {
@@ -66,7 +70,7 @@ module.exports = (app = require("express")(), configuration, dbmuxev = require("
 
             if (message.comment)
                 for (const language in message.comment)
-                    if (message.comment[language].replaceAll(" ", "").toUpperCase().includes(query)) {
+                    if (message.comment[language] && message.comment[language].replaceAll(" ", "").toUpperCase().includes(query)) {
                         results[messageId] = message;
                         continue func1;
                     }
