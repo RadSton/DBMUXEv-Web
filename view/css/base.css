@@ -321,9 +321,34 @@ break {
 
 .disclaimerLink {
     color: red;
+    padding-bottom: 0;
 }
 
 .disclaimerLink:hover {
     text-decoration: underline;
     cursor: pointer;
+}
+
+.disclaimerBack {
+    font-size: 15pt;
+    font-weight: 600;
+    color:rgba(255, 255, 255, 0.8)
+}
+
+.disclaimerBack:hover {
+    text-decoration: underline;
+    cursor: pointer;
+    color:rgba(255, 255, 255, 1)
+}
+
+.backButton {
+    font-size: 18pt;
+    font-weight: 600;
+    color:rgba(255, 255, 255, 0.8)
+}
+
+.backButton:hover {
+    text-decoration: underline;
+    cursor: pointer;
+    color:rgba(255, 255, 255, 1)
 }

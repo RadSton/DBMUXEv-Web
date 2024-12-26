@@ -42,6 +42,8 @@ export default class Buses extends Shared {
             result += this.generateNetworkElement(network);
 
         this.searchList.innerHTML = result;
+
+        this.addBackButtonToSearch();
     }
 
     renderBusSelector(busNames, arch, network) {
@@ -55,6 +57,8 @@ export default class Buses extends Shared {
             result += this.generateBusElement(bus);
 
         this.searchList.innerHTML = result;
+
+        this.addBackButtonToSearch();
     }
 
     renderDisclaimer(arch, network, bus) {
@@ -66,7 +70,6 @@ export default class Buses extends Shared {
 
         const disclaimer = this.networks[arch]?.[network + "." + bus]?.disclaimer;
 
-        console.log(disclaimer);
         if (!disclaimer)
             return false;
 
@@ -75,8 +78,10 @@ export default class Buses extends Shared {
 
         this.selectedInfo.innerHTML = `
         <span class="selTitle">Please read this disclaimer about <span class="selType">${network + "." + bus}</span></span>
-        <span class="selTitle">${disclaimer}</span>
-        <span class="selTitle"><a class="headerLink selected disclaimerLink" onclick="currentPage.callFunc('acceptDisclaimer', '${disclaimerLocalStorageId}')">Continue </a></span> `;
+        <span class="selTitle">${disclaimer.replaceAll("\n", "<br />")}</span>
+        <span class="selTitle disclaimerLink"><a class="headerLink selected " onclick="currentPage.callFunc('acceptDisclaimer', '${disclaimerLocalStorageId}')">Continue anyways </a></span> 
+        <span class="selTitle disclaimerBack"><a class="headerLink selected " onclick="history.back()">Back to bus selection</a></span> 
+        `;
 
         return true;
     }
@@ -209,6 +214,9 @@ export default class Buses extends Shared {
         this.selectedInfo.style.display = "none";
         this.searchList.style.display = "none";
 
+        if(!this.buses)  // there may be two instances on history.back one hasnt been intialized ; this stopps it from erroring
+            return;
+        
         if (!this.arch || !this.buses[this.arch]) {
             this.setLockedSearch(true, "Select bus first!");
             this.renderArchitectureSelector()

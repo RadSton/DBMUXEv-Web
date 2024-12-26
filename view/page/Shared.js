@@ -184,6 +184,10 @@ export default class {
         this.search.value = "";
     }
 
+    addBackButtonToSearch () {
+        this.searchList.innerHTML += `<span class="selTitle backButton"><a class="headerLink selected" onclick="history.back()">Back</a></span>`;
+    }
+
     async handleKeyUpEvent(event) {
         if (this.search.value == this.lastSearch)
             return;
