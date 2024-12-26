@@ -4,25 +4,56 @@
 // it works thank god ; Update 2 weeks later: no it didnt, id*** radston12
 // Update 6 days later: Yes it works for now but the function "bigEndian" does "LittleEndian", such an id*** radston12
 // Fixed now
+// Update 2 days later: I am trying a new aproach this is getting stupod
+//      - OK IT KINDA WORKS FLAWLESSLY AND IS EASY - FINALLY
 
+
+
+const addBitToBits = (nr) => {
+
+    let byte = Math.floor(nr/10);
+    let bit = nr % 10;
+
+    bit --;
+    if(bit < 0) {
+        byte ++;
+        bit = 7;
+    }
+
+    const res = (byte * 10) + bit;
+    return res;
+}
 
 /**
  * This function converts the supplied bits to the big endian format by returning startBit and length
  * 
  * @param {"1.7-1.0"} bits "bits" string from signals
  * @returns {{length: 1, startBit: 10}}
- * @todo optimize dont convert to little endian just for length!
  */
 
 module.exports.convertToBigEndian = (bits) => {
-    if(bits.length == 1) bits = bits + ".0";
+    if (bits.length == 1) bits = bits + ".0";
+  
+    const parts = bits.replaceAll(".", "").split("-").map((x) => Number.parseInt(x));
+    const bigEndianPositions = parts.map(convertToBigEndianLocation);
 
-    let raw = bits.replaceAll(".", "").split("-");
-
-    return {
-        length: this.convertToLittleEndian(bits).length,
-        startBit: convertToBigEndianLocation(Number.parseInt(raw[0]))
+    let final = {
+        startBit: bigEndianPositions[0],
+        length: 1
     }
+    
+    if (bigEndianPositions.length > 1) {
+        let checkBit = addBitToBits(parts[0])
+        for (let bitIndex = 1; bitIndex < 64; bitIndex++) {
+            if (checkBit == parts[1]) {
+                final.length += bitIndex;
+                break;
+            }
+            checkBit = addBitToBits(checkBit);
+        }
+    }
+
+    return final;
 }
 
 /**
@@ -34,7 +65,7 @@ module.exports.convertToBigEndian = (bits) => {
 
 module.exports.convertToLittleEndian = (bits) => {
 
-    if(bits.length == 1) bits = bits + ".0";
+    if (bits.length == 1) bits = bits + ".0";
 
     let raw = bits.replaceAll(".", "").split("-").map((x) => Number.parseInt(x)); // List of raw values without dot // f.e. "1.7-1.0" -> [7, 0] or "5.0" -> [32]
     let parsed = raw; // .map(convertToBigEndianLocation)
@@ -57,7 +88,7 @@ module.exports.convertToLittleEndian = (bits) => {
 
         if (diff0 != 0 && ((diff0 == 0 && diff1 == 7) || (diff0 == 7 && diff1 == 0))) {
             let newRaw = [];
-            
+
             newRaw.push(raw[0] - diff0);
             newRaw.push(raw[1] + diff0);
 
