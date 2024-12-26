@@ -24,6 +24,7 @@ module.exports.loadSmart = (configuarion) => {
       nodes: {},
       buses: {},
       diag: {},
+      templates: {},
 
       // Nearly same keys as in buses but Not in spec and different data; allows for simpler use I think .. I hope
       networks: {}
@@ -121,6 +122,7 @@ module.exports.loadSmart = (configuarion) => {
       }
 
       dbmuxev.buses[architectureKey] = {};
+      dbmuxev.templates[architectureKey] = {};
 
       for (const networkFullName of Object.keys(architecture)) {
          let networkPath = path.join(networkBasePath, "./" + networkFullName);
@@ -132,12 +134,43 @@ module.exports.loadSmart = (configuarion) => {
 
          dbmuxev.buses[architectureKey][networkFullName] = {};
 
+         let templatePostProcessing = [];
+
          for (const busMessageFile of fs.readdirSync(networkPath)) {
+
+            if (busMessageFile == "templates") {
+
+               const templatePath = path.join(networkPath, "./" + busMessageFile)
+
+               dbmuxev.templates[architectureKey][networkFullName] = {};
+
+               for (const templateFile of fs.readdirSync(templatePath)) {
+                  try {
+
+                     dbmuxev.templates[architectureKey][networkFullName][templateFile.replace(".yml", "")] = yaml.load(fs.readFileSync(path.join(templatePath, './' + templateFile), 'utf8'));
+
+                  } catch (error) {
+                     console.error("Error during loading of template " + templateFile + ` in ${architectureKey}-${networkFullName}!`)
+                     console.log(error);
+                  }
+               }
+
+               continue;
+            }
+
             if (busMessageFile.endsWith(".yml")) {
 
                try {
 
-                  dbmuxev.buses[architectureKey][networkFullName][busMessageFile.replaceAll(".yml", "")] = yaml.load(fs.readFileSync(path.join(networkPath, './' + busMessageFile), 'utf8'));
+                  let rawMessage = yaml.load(fs.readFileSync(path.join(networkPath, './' + busMessageFile), 'utf8'));
+
+                  const rawMessageName = busMessageFile.replaceAll(".yml", "");
+
+                  if (rawMessage.template)
+                     templatePostProcessing.push(rawMessageName);
+
+
+                  dbmuxev.buses[architectureKey][networkFullName][rawMessageName] = rawMessage;
 
                } catch (error) {
 
@@ -145,8 +178,30 @@ module.exports.loadSmart = (configuarion) => {
 
                }
 
-            } else if(busMessageFile == "_DISCLAIMER.txt") {
+            } else if (busMessageFile == "_DISCLAIMER.txt") {
                dbmuxev.networks[architectureKey][networkFullName].disclaimer = fs.readFileSync(path.join(networkPath, './' + busMessageFile), 'utf8');
+            }
+         }
+
+         if(templatePostProcessing.length == 0) break;
+
+         if(!dbmuxev.templates[architectureKey][networkFullName]) {
+            console.error(`There should be a folder with templates in ${networkFullName} (Arch: ${architectureKey}) called "templates", but there is non!`);
+            break;
+         }
+
+         for(const rawTemplatedMessage of templatePostProcessing) {
+            const rawMessage = dbmuxev.buses[architectureKey][networkFullName][rawTemplatedMessage];
+            
+            if(rawMessage.template && dbmuxev.templates[architectureKey][networkFullName][rawMessage.template]) {
+
+               const template = dbmuxev.templates[architectureKey][networkFullName][rawMessage.template];
+
+               dbmuxev.buses[architectureKey][networkFullName][rawTemplatedMessage] = {
+                  ...template,
+                  ...rawMessage
+               };
+
             }
          }
 
@@ -169,5 +224,5 @@ module.exports.runConverter = converters.convert;
 module.exports.getAvailableConverters = converters.availableConverters;
 
 module.exports.createMessage = (dbmuxev, arch, network, bus, yamlContent) => {
-  // if()
+   // if()
 }
