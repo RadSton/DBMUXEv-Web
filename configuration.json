@@ -4,7 +4,6 @@
 
     "ENABLE_DBMUXEV_PARSING": true,
     "ENABLE_WEBSERVER": true,
-    "ENABLE_WEB_EDITING": false,
     "ENABLE_API": true,
     "ENABLE_WEB_UI": true,
     "ENABLE_COLOR_LOGGING": true,

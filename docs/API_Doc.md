@@ -10,7 +10,6 @@ Returns some important options of the `configuration.json` file
 {
     "ENABLE_WEBSERVER": true,
     "ENABLE_API": true,
-    "ENABLE_WEB_EDITING": true,
     "DISABLE_CONVERSION_ENDPOINTS": false
 }
 ```

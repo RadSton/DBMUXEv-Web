@@ -167,7 +167,3 @@ module.exports.loadSmart = (configuarion) => {
 
 module.exports.runConverter = converters.convert;
 module.exports.getAvailableConverters = converters.availableConverters;
-
-module.exports.createMessage = (dbmuxev, arch, network, bus, yamlContent) => {
-  // if()
-}

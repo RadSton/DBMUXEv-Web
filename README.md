@@ -47,7 +47,12 @@ To exit out of it simply use `CTRL + C`
 
 ## TODO / Current plans / Help appreciated
 
-- In the future I plan on supporting "online" editing of the db.
+- Currently I want to stress test the application to see possible performance issues and crash potentials
+
+
+## Not planned
+
+- Online Editing is not planned anymore, since it seems faster to just copy a yml file and ajust it.
 
 ## Pictures of the Web UI 
 

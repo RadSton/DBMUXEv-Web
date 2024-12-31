@@ -4,7 +4,7 @@ const path = require("path");
 module.exports.load = (app, configuration, dbmuxev, dbmuxevLibrary) => {
     console.info("Trying to load all api endpoints");
 
-    const OPTIONS_TO_EXPOSE = ["ENABLE_WEBSERVER", "ENABLE_API", "ENABLE_WEB_EDITING", "DISABLE_CONVERSION_ENDPOINTS"]
+    const OPTIONS_TO_EXPOSE = ["ENABLE_WEBSERVER", "ENABLE_API", "DISABLE_CONVERSION_ENDPOINTS"]
 
     let options = {};
 
