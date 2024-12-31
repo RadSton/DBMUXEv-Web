@@ -40,9 +40,9 @@ export default class Nodes extends Shared {
 
         for (const [nodeKey, node] of Object.entries(nodeContainer)) {
 
-            let name = node.name ? "Name: " + node.name[this.defaultLang] : "";
+            let name = node.name ? "Name: " + this.autoChooseLanguage(node.name) : "";
             let altName = node.alt ? "Alternative names: " + node.alt.join(", ") : "";
-            let comment = node.comment ? "Comment: " + node.comment[this.defaultLang] : "";
+            let comment = node.comment ? "Comment: " + this.autoChooseLanguage(node.comment) : "";
 
             result += this.generateNodeElement(nodeKey, name, altName, comment);
         }
@@ -84,13 +84,13 @@ export default class Nodes extends Shared {
             this.selectedInfo.innerHTML += `<span class="field" style="text-align: center; padding-bottom: 1vh;">Redirected from <span class="selType">${node.redirectedFrom}</span> to <span class="selType">${nodeId}</span></span>`;
 
         if (node.name)
-            this.addField("Name: ", node.name[this.defaultLang])
+            this.addField("Name: ", this.autoChooseLanguage(node.name))
 
         if (node.alt)
             this.addField("Alternative node names: ", node.alt.join(", "));
 
         if (node.comment)
-            this.addField("Comment: ", node.comment[this.defaultLang]);
+            this.addField("Comment: ", this.autoChooseLanguage(node.comment));
 
         if (node.bus && node.bus.length > 0)
             this.selectedInfo.innerHTML += `<span class="fieldTitle">Busses:</span>`;
@@ -135,7 +135,7 @@ export default class Nodes extends Shared {
                         this.addTreeField(" -> Name: ", `${message.name}`, 3);
 
                     if (message.comment)
-                        this.addTreeField(" -> Comment: ", `${message.comment[this.defaultLang]}`, 3);
+                        this.addTreeField(" -> Comment: ", `${this.autoChooseLanguage(message.comment)}`, 3);
 
                     if (message.length)
                         this.addTreeField(" -> Length: ", `${message.length}`, 3);

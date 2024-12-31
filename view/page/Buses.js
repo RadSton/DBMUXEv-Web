@@ -102,7 +102,7 @@ export default class Buses extends Shared {
             const data = messages[message];
 
             const name = data.name ? "Name: " + data.name : "";
-            const comment = data.comment ? "Comment: " + data.comment[this.defaultLang] : "";
+            const comment = data.comment ? "Comment: " + this.autoChooseLanguage(data.comment) : "";
             const signals = data.signals ? "Signals: " + Object.keys(data.signals).join(", ") : "";
 
             result += this.generateMessageElement(toHexString(message, 3), name, comment, signals);
@@ -135,7 +135,7 @@ export default class Buses extends Shared {
             this.addField("Name: ", message.name);
 
         if (message.comment)
-            this.addField("Comment: ", message.comment[this.defaultLang]);
+            this.addField("Comment: ", this.autoChooseLanguage(message.comment));
 
         if (message.alt_names)
             this.addField("Alternative names: ", message.alt_names.join(", "));
@@ -174,7 +174,7 @@ export default class Buses extends Shared {
             this.addTreeField("-> ", signalName, 1);
 
             if (signal.comment)
-                this.checkedTreeField("-> Comment: ", signal.comment[this.defaultLang], 2);
+                this.checkedTreeField("-> Comment: ", this.autoChooseLanguage(signal.comment), 2);
 
             this.checkedTreeField("-> Bits: ", signal.bits, 2);
             this.checkedTreeField("-> Unused: ", signal.unused, 2);
@@ -198,11 +198,38 @@ export default class Buses extends Shared {
             this.checkedTreeField("-> values: ", signal.factor, 2);
 
             for (const [valKey, val] of Object.entries(signal.values))
-                this.checkedTreeField("-> " + toHexString(valKey, 2) + ": ", val[this.defaultLang], 3);
+                this.checkedTreeField("-> " + toHexString(valKey, 2) + ": ", this.autoChooseLanguage(val), 3);
 
             this.addField("-------------------", "");
         }
     }
+
+
+    renderMessageInfoAutoWP(message, arch, network, bus, messageId) {
+        setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 1); // set Timeout is just so that it runs async seems to block thread otherwise
+
+        this.setInfoActive(true);
+        this.setRenderingDetails("");
+
+        if (!message) {
+            this.selectedInfo.innerHTML = `
+                <span class="selTitle">The message <span class="selType">${messageId}</span> wasnt found in ${arch}/${network}.${bus}</span>
+                <span class="selTitle"><a class="headerLink selected" href="/buses">Reset filters</a></span>
+            `;
+            return;
+        }
+
+        this.selectedInfo.innerHTML = `<span class="selTitle"><span class="selType">${arch}</span>/<span class="selType">${network}.${bus}</span>/<span class="selType">${messageId.replaceAll("0x", "")}</span>.yml -> <span class="selType">${messageId}</span></span>`;
+
+        this.setRenderingDetails(`Showing message ${messageId} ${this.generateLanguageSwitcher()}`);
+
+    
+        this.selectedInfo += `
+
+        `
+
+    }
+
 
     async render() {
         this.query = this.urlParams.get("query");
@@ -256,6 +283,7 @@ export default class Buses extends Shared {
         }
 
         this.setLockedSearch(false, "Search for message");
+        //this.renderMessageInfo(messages[this.message.replaceAll("0x", "")], this.arch, this.network, this.bus, this.message);
         this.renderMessageInfo(messages[this.message.replaceAll("0x", "")], this.arch, this.network, this.bus, this.message);
     }
 

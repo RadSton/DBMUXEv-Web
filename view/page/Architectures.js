@@ -64,7 +64,7 @@ export default class Architectures extends Shared {
             for (const [baseVariantKey, arch] of Object.entries(architectureContainer[baseArchKey])) {
                 const archKey = baseArchKey + "." + baseVariantKey;
 
-                let note = arch.comment ? "Comment: " + arch.comment[this.defaultLang] : "";
+                let note = arch.comment ? "Comment: " + this.autoChooseLanguage(arch.comment) : "";
                 let networks = arch.networks ? "Networks: " + Object.keys(arch.networks).join(", ") : "";
                 let protocols = arch.protocols ? "Protocols: " + arch.protocols.join(", ") : "";
 
@@ -121,7 +121,7 @@ export default class Architectures extends Shared {
         this.addField("Variant: ", architectureVariant)
 
         if (arch.comment)
-            this.addField("Comment: ", arch.comment[this.defaultLang]);
+            this.addField("Comment: ", this.autoChooseLanguage(arch.comment));
 
         this.addField("Nodes: ", `<a href="/nodes?arch=${fullArchitectureName}" class="fieldLink">${architectureName}.${architectureVariant}</a>`)
 
@@ -147,10 +147,10 @@ export default class Architectures extends Shared {
                 this.addTreeField(" -> Bus: ", `<a href="/buses?arch=${fullArchitectureName}&network=${networkName}&bus=${busName}" class="fieldLink">${busName}</a>`, 2);
 
                 if (bus.display_name)
-                    this.addTreeField(" -> Name: ", bus.display_name[this.defaultLang], 3);
+                    this.addTreeField(" -> Name: ", this.autoChooseLanguage(bus.display_name), 3);
 
                 if (bus.comment)
-                    this.addTreeField(" -> Note: ", bus.comment[this.defaultLang], 3);
+                    this.addTreeField(" -> Note: ", this.autoChooseLanguage(bus.comment), 3);
             }
 
             this.addTreeField(":---------:", "", 1);

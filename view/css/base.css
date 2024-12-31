@@ -352,3 +352,15 @@ break {
     cursor: pointer;
     color:rgba(255, 255, 255, 1)
 }
+
+.languageSelectable {
+    cursor: pointer;
+}
+ 
+.languageSelectable:hover {
+    text-decoration: underline;
+    text-decoration-color: rgba(255, 173, 66, 0.9);
+    text-decoration-style: dashed;
+    text-decoration-thickness: 2px;
+    opacity: 0.65;
+}

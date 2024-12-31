@@ -62,3 +62,4 @@ document.addEventListener("click", (event) => {
 document.querySelector(".search > input").addEventListener("keyup", (event) => {
     currentPage.handleKeyUpEvent(event);
 });
+

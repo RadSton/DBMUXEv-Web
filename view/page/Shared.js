@@ -11,9 +11,24 @@ export default class {
     constructor() {
         this.urlParams = new URLSearchParams(location.search);
         setTimeout(async () => {
+            if (!window.languages) {
+                const languageList = await requestJSON("GET", "/api/v1/languages");
+                if (languageList)
+                    Object.defineProperty(window, "languages", { value: languageList })
+                else  // Backup Mode -> Define French and English
+                    Object.defineProperty(window, "languages", {
+                        value: {
+                            en: "English",
+                            fr: "French"
+                        }
+                    })
+            }
+
             await this.init();
-            this.onRedirect()
+            this.onRedirect();
         }, 1);
+
+
     }
 
     pushLink(url) {
@@ -113,14 +128,34 @@ export default class {
     }
 
     generateLanguageSwitcher() {
-        return `<span class="languageSwitcher">(Language: <span ${this.defaultLang == "en" ? `data-sel` : `onClick="currentPage.setLanguage('en')"`}>English</span> / <span ${this.defaultLang == "fr" ? `data-sel` : `onClick="currentPage.setLanguage('fr')"`}> French</span>)</span>`;
+        let langSwitcherHTML = `<span class="languageSwitcher">(Language: `;
+
+        for (const langCode in window.languages)
+            langSwitcherHTML += `<span class="languageSelectable" ${this.defaultLang == langCode ? `data-sel` : `onClick="currentPage.setLanguage('${langCode}')"`}>${window.languages[langCode]}</span> / `;
+
+        return langSwitcherHTML.substring(0, langSwitcherHTML.length - 2) + `)</span>`;
     }
 
     setLanguage(language) {
         this.defaultLang = language;
 
+        localStorage.setItem("language", this.defaultLang);
+
         // RELOAD
         this.onRedirect();
+    }
+
+    autoChooseLanguage(comment) {
+        if (!comment || typeof comment !== 'object') return "";
+
+        if (comment[this.defaultLang]) return comment[this.defaultLang];
+
+        if (comment["en"]) return comment["en"];
+
+        for (const commentLang in comment)
+            return comment[commentLang];
+
+        return "Error: Empty comment!"
     }
 
     generateConvertLink(converter, arch, busIdentifyer) {
@@ -182,9 +217,15 @@ export default class {
 
     async init() {
         this.search.value = "";
+
+        const storedLanguage = localStorage.getItem("language");
+
+        if (storedLanguage && window.languages[storedLanguage])
+            this.defaultLang = storedLanguage;
+
     }
 
-    addBackButtonToSearch () {
+    addBackButtonToSearch() {
         this.searchList.innerHTML += `<span class="selTitle backButton"><a class="headerLink selected" onclick="history.back()">Back</a></span>`;
     }
 

@@ -24,6 +24,7 @@ module.exports.loadSmart = (configuarion) => {
       nodes: {},
       buses: {},
       diag: {},
+      languages: [],
 
       // Nearly same keys as in buses but Not in spec and different data; allows for simpler use I think .. I hope
       networks: {}
@@ -136,8 +137,14 @@ module.exports.loadSmart = (configuarion) => {
             if (busMessageFile.endsWith(".yml")) {
 
                try {
+                  const msg = yaml.load(fs.readFileSync(path.join(networkPath, './' + busMessageFile), 'utf8'));
 
-                  dbmuxev.buses[architectureKey][networkFullName][busMessageFile.replaceAll(".yml", "")] = yaml.load(fs.readFileSync(path.join(networkPath, './' + busMessageFile), 'utf8'));
+                  dbmuxev.buses[architectureKey][networkFullName][busMessageFile.replaceAll(".yml", "")] = msg;
+
+                  if(msg.comment)
+                     for(const langCode of Object.keys(msg.comment))
+                        if(!dbmuxev.languages.includes(langCode))
+                           dbmuxev.languages.push(langCode);
 
                } catch (error) {
 
@@ -153,7 +160,7 @@ module.exports.loadSmart = (configuarion) => {
       }
    }
    if (configuarion.SAVE_DEBBUGING_DBMUXEV_FILE)
-      fs.writeFileSync(path.join(basePath, './web/debugging_dbmuxev.json'), JSON.stringify(dbmuxev));
+      fs.writeFileSync(path.join(__dirname, '../../debugging_dbmuxev.json'), JSON.stringify(dbmuxev));
 
    if (!configuarion.DISABLE_CONVERSION_ENDPOINTS)
       converters.load();
