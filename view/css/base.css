@@ -310,12 +310,23 @@ break {
         font-size: 13pt;
     }
 
-    .fieldTitle {
-        font-size: 16pt;
+    .fieldTitle  {
+        font-size: 16pt !important;
     }
 
     .logotext {
         font-size: 10pt;
+    }
+
+    .searchbar {
+        min-width: 1px;
+    }
+    .search {
+        padding-left: 7px;
+    }
+
+    .searchResultId {
+        font-size: 13pt;
     }
 }
 
@@ -356,7 +367,7 @@ break {
 .languageSelectable {
     cursor: pointer;
 }
- 
+
 .languageSelectable:hover {
     text-decoration: underline;
     text-decoration-color: rgba(255, 173, 66, 0.9);

@@ -128,7 +128,7 @@ export default class {
     }
 
     generateLanguageSwitcher() {
-        let langSwitcherHTML = `<span class="languageSwitcher">(Language: `;
+        let langSwitcherHTML = `<br /><span class="languageSwitcher">(Language: `;
 
         for (const langCode in window.languages)
             langSwitcherHTML += `<span class="languageSelectable" ${this.defaultLang == langCode ? `data-sel` : `onClick="currentPage.setLanguage('${langCode}')"`}>${window.languages[langCode]}</span> / `;
