@@ -43,6 +43,7 @@ export default class Buses extends Shared {
 
         this.searchList.innerHTML = result;
 
+        this.addBackButtonToDetails();
         this.addBackButtonToSearch();
     }
 
@@ -58,6 +59,7 @@ export default class Buses extends Shared {
 
         this.searchList.innerHTML = result;
 
+        this.addBackButtonToDetails();
         this.addBackButtonToSearch();
     }
 
@@ -109,6 +111,9 @@ export default class Buses extends Shared {
         }
 
         this.searchList.innerHTML = result;
+
+        this.addBackButtonToDetails();
+        this.addBackButtonToSearch();
     }
 
     renderMessageInfo(message, arch, network, bus, messageId) {
@@ -116,6 +121,8 @@ export default class Buses extends Shared {
 
         this.setInfoActive(true);
         this.setRenderingDetails("");
+
+        
 
         if (!message) {
             this.selectedInfo.innerHTML = `
@@ -128,6 +135,7 @@ export default class Buses extends Shared {
         this.selectedInfo.innerHTML = `<span class="selTitle"><span class="selType">${arch}</span>/<span class="selType">${network}.${bus}</span>/<span class="selType">${messageId.replaceAll("0x", "")}</span>.yml -> <span class="selType">${messageId}</span></span>`;
 
         this.setRenderingDetails(`Showing message ${messageId} ${this.generateLanguageSwitcher()}`);
+
 
         this.addField("Id: ", messageId);
 
@@ -202,6 +210,9 @@ export default class Buses extends Shared {
 
             this.addField("-------------------", "");
         }
+        
+        this.addBackButtonToDetails();
+        this.addBackButtonToInfo();
     }
 
 
@@ -288,6 +299,7 @@ export default class Buses extends Shared {
     }
 
     onElementClick(element) {
+        super.onElementClick(element);
 
         let arch = element.getAttribute("data-arch");
         let network = element.getAttribute("data-network");

@@ -133,7 +133,7 @@ export default class {
         for (const langCode in window.languages)
             langSwitcherHTML += `<span class="languageSelectable" ${this.defaultLang == langCode ? `data-sel` : `onClick="currentPage.setLanguage('${langCode}')"`}>${window.languages[langCode]}</span> / `;
 
-        return langSwitcherHTML.substring(0, langSwitcherHTML.length - 2) + `)</span>`;
+        return langSwitcherHTML.substring(0, langSwitcherHTML.length - 3) + `)</span>`;
     }
 
     setLanguage(language) {
@@ -225,9 +225,9 @@ export default class {
 
     }
 
-    addBackButtonToSearch() {
-        this.searchList.innerHTML += `<span class="selTitle backButton"><a class="headerLink selected" onclick="history.back()">Back</a></span>`;
-    }
+    addBackButtonToSearch = () => this.searchList.innerHTML += `<span class="selTitle backButton"><a class="headerLink selected" onclick="history.back()">< Back</a></span>`;
+    addBackButtonToInfo = () => this.selectedInfo.innerHTML += `<span class="selTitle backButton"><a class="headerLink selected" onclick="history.back()">< Back</a></span>`;
+    
 
     async handleKeyUpEvent(event) {
         if (this.search.value == this.lastSearch)
@@ -263,6 +263,18 @@ export default class {
         })
     }
 
-    setRenderingDetails = (content) => this.renderingDetails.innerHTML = content;
+    addBackButtonToDetails = (redirect) => { 
+        const backButtonElement = `
+            <span class="backButton" onclick="${!redirect ? `history.back()` : `currentPage.redirectToLink(\"${redirect}\")`}">
+                <!--- <span class="material-symbols-outlined">arrow_back</span> --->
+                < Back 
+            </span> 
+            <br /> 
+            <br />`;
+        
+        this.renderingDetails.innerHTML = backButtonElement + this.renderingDetails.innerHTML;
+    }
+
+    setRenderingDetails = (content) => this.renderingDetails.innerHTML = `<span class="detailsFaded">${content}</span>`;
 
 }

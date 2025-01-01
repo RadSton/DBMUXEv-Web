@@ -77,7 +77,7 @@ body {
 
 .search {
     display: flex;
-    align-items: center;    
+    align-items: center;
     justify-content: flex-start;
     padding-left: 30px;
     height: 100%;
@@ -185,9 +185,12 @@ break {
 
 .renderingDetails {
     text-align: center;
-    opacity: 0.6;
     font-size: 12pt;
     margin: 0;
+}
+
+.detailsFaded {
+    opacity: 0.6;
 }
 
 ::-webkit-scrollbar {
@@ -310,7 +313,7 @@ break {
         font-size: 13pt;
     }
 
-    .fieldTitle  {
+    .fieldTitle {
         font-size: 16pt !important;
     }
 
@@ -321,6 +324,7 @@ break {
     .searchbar {
         min-width: 1px;
     }
+
     .search {
         padding-left: 7px;
     }
@@ -343,25 +347,26 @@ break {
 .disclaimerBack {
     font-size: 15pt;
     font-weight: 600;
-    color:rgba(255, 255, 255, 0.8)
+    color: rgba(255, 255, 255, 0.8)
 }
 
 .disclaimerBack:hover {
     text-decoration: underline;
     cursor: pointer;
-    color:rgba(255, 255, 255, 1)
+    color: rgba(255, 255, 255, 1)
 }
 
 .backButton {
     font-size: 18pt;
     font-weight: 600;
-    color:rgba(255, 255, 255, 0.8)
+    color: rgba(255, 145, 0, 0.8);
 }
 
 .backButton:hover {
     text-decoration: underline;
+    text-decoration-style: dashed;
     cursor: pointer;
-    color:rgba(255, 255, 255, 1)
+    color: rgba(255, 145, 0, 1)
 }
 
 .languageSelectable {

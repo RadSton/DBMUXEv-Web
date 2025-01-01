@@ -31,6 +31,7 @@ export default class Car extends Shared {
     }
 
     onElementClick(element) {
+        super.onElementClick(element);
         const carId = element.getAttribute("data-car");
 
         if (!carId) return;

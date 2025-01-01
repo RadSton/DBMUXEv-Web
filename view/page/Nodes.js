@@ -25,6 +25,7 @@ export default class Nodes extends Shared {
     renderNodeSelector(nodeContainer, nodeArch) {
         this.setInfoActive(false)
         this.setRenderingDetails(`Select a node from ${nodeArch} (${Object.keys(nodeContainer).length}) ${this.generateLanguageSwitcher()}`);
+        this.addBackButtonToDetails();
 
         if (nodeContainer.error) {
             this.searchList.innerHTML =
@@ -48,6 +49,8 @@ export default class Nodes extends Shared {
         }
 
         this.searchList.innerHTML = result;
+
+        this.addBackButtonToSearch();
     }
 
     async renderNodeInfo(nodeContainer, nodeId, nodeArch) {
@@ -77,7 +80,8 @@ export default class Nodes extends Shared {
         }
 
         this.setRenderingDetails(`Showing node ${nodeId} from ${nodeArch} ${this.generateLanguageSwitcher()}`);
-
+        this.addBackButtonToDetails();
+        
         this.selectedInfo.innerHTML = `<span class="selTitle">nodes/<span class="selType">${nodeArch}</span>.yml -> <span class="selType">${nodeId}</span></span>`;
 
         if (node.redirectedFrom)
@@ -156,6 +160,9 @@ export default class Nodes extends Shared {
         renderInteractingMessagePart("sending", "Sending");
         renderInteractingMessagePart("recieving", "Recieving");
 
+        
+        this.addBackButtonToInfo();
+
     }
 
 
@@ -191,6 +198,8 @@ export default class Nodes extends Shared {
     }
 
     onElementClick(element) {
+        super.onElementClick(element);
+
         let node = element.getAttribute("data-node");
         let arch = element.getAttribute("data-arch");
         if (!node && !arch) return;

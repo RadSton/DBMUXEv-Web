@@ -32,6 +32,8 @@ export default class Architectures extends Shared {
     }
 
     onElementClick(element) {
+        super.onElementClick(element);
+        
         let arch = element.getAttribute("data-arch");
 
         if (!arch) return;
@@ -116,6 +118,7 @@ export default class Architectures extends Shared {
         this.selectedInfo.innerHTML = `<span class="selTitle"><span class="selType">architectures</span>.yml -> <span class="selType">${architectureName}</span></span>`;
 
         this.setRenderingDetails(`Showing architecture ${fullArchitectureName} ${this.generateLanguageSwitcher()}`);
+        this.addBackButtonToDetails();
 
         this.addField("Architecture: ", architectureName)
         this.addField("Variant: ", architectureVariant)
@@ -155,6 +158,8 @@ export default class Architectures extends Shared {
 
             this.addTreeField(":---------:", "", 1);
         }
+
+        this.addBackButtonToInfo();
 
     }
 
